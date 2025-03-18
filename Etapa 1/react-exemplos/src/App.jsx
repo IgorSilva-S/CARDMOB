@@ -4,10 +4,12 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import Counter from './components/counter'
 import Photo from './components/photo'
+import Album from './components/Album'
 
 function App() {
   const [count, setCount] = useState(0)
   const [photos, setPhotos] = useState([])
+  const [albumId, setAlbumId] = useState(1)
 
   const fetchPhotos = async () => {
     try {
@@ -68,6 +70,15 @@ function App() {
 
         })}
       </article>
+      <div>
+        <button onClick={() => {setAlbumId(1)}}>Album #1</button>
+        <button onClick={() => {setAlbumId(2)}}>Album #2</button>
+        <button onClick={() => {setAlbumId(3)}}>Album #3</button>
+        <button onClick={() => {setAlbumId(4)}}>Album #4</button>
+        <button onClick={() => {setAlbumId(5)}}>Album #5</button>
+        <button onClick={() => {setAlbumId(6)}}>Album #6</button>
+      </div>
+      <Album albumId={albumId}/>
     </>
   )
 }
