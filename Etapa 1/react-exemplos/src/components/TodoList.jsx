@@ -41,6 +41,12 @@ export default function TodoList({ name }) {
         ))
     }
 
+    // Callback
+    const cancelEditing = () => {
+        setEditingId(null);
+        setEditingText('');
+    }
+
     return (
         <div style={{ textAlign: 'center', marginTop: '50px'}}>
             <h2>A fazer: {name}</h2>
@@ -64,6 +70,7 @@ export default function TodoList({ name }) {
                                             onChange={(event) => setEditingText(event.target.value)}
                                         />
                                         <button onClick={saveEdit}>Salvar</button>
+                                        <a href="#" onClick={cancelEditing}>Cancelar</a>
                                     </>
                                 ) : (
                                     <>
