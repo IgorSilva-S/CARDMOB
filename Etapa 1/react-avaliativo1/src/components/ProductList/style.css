@@ -1,0 +1,117 @@
+.contactAdd,
+.contactCard {
+    padding: 80px 100px;
+    border-radius: 8px;
+    background-color: #191919;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    position: relative;
+    gap: 80px;
+    margin-bottom: 20px;
+    transition-duration: .3s;
+}
+
+.contactAdd {
+    padding: 80px 100px;
+}
+
+.contactAdd img,
+.contactCard img {
+    border-radius: 4px;
+    width: 120px;
+    height: 120px;
+}
+
+.contactAdd div,
+.contactCard div {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.contactAdd div input,
+.contactCard div input {
+    border-radius: 8px;
+    border: 1px solid transparent;
+    padding: 0.6em 1.2em;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: inherit;
+    background-color: #000;
+    transition: border-color 0.25s;
+}
+
+.contactAdd div input:focus,
+.contactCard div input:focus {
+    outline: none;
+    border-color: #646cff;
+}
+
+.contactAdd h2,
+.contactCard h2 {
+    position: absolute;
+    top: 3px;
+    left: 30px;
+}
+
+.contactAdd .cardFooter,
+.contactCard .cardFooter {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
+.contactAdd .cardFooter2b,
+.contactCard .cardFooter2b {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: flex-end;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.cardsView {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+}
+
+.addButton {
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    z-index: 2;
+}
+
+@media (prefers-color-scheme: light) {
+    :root {
+        color: #213547;
+        background-color: #ffffff;
+    }
+
+    a:hover {
+        color: #747bff;
+    }
+
+    button {
+        background-color: #fff;
+    }
+
+    .contactAdd,
+    .contactCard {
+        background-color: #f0f0f0;
+    }
+
+    .contactAdd div input,
+    .contactCard div input {
+        background-color: #fff;
+    }
+}
