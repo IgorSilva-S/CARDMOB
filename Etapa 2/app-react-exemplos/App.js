@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, Image, TextInput, FlatList } from 'react-native';
+import { StyleSheet, Text, View, Button, Image, TextInput, FlatList, Alert } from 'react-native';
 
 //Indicar endereço backend
 const BASE_URL = 'http://10.81.205.26:3000';
@@ -20,51 +20,103 @@ export default function App() {
   const fetchItems = async () => {
     setLoading(true)
     try {
-
-    } catch {
-       
+      const response = await fetch(`${BASE_URL}/items`)
+      const data = await response.json()
+      console.log(JSON.stringify(data))
+      setItems(data)
+    } catch (err) {
+       console.error('Error fetching items:', err)
     } finally {
-      
+      setLoading(false)
     }
   }
 
-  const incrementCounter = () => {
-    setCounter(counter + 1)
-  }
-
-  const decrementCounter = () => {
-    setCounter(counter - 1)
-  }
+  useEffect(() => {
+    fetchItems()
+  }, [])
 
   // Create
-  const addItem = () => {
+  const addItem = async () => {
     if (text.trim === '') {
       return
     }
-    const newItem = {
-      id: Math.random().toString(),
-      text: text.trim()
+
+    try {
+      const response = await fetch(`${BASE_URL}/items`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ text: text.trim() })
+      })
+
+      if (response.ok) {
+        await fetchItems();
+        setText('')
+      } else {
+        console.error("Erro ao adicionar texto", response.status)
+  
+      }
+    } catch (err) {
+      console.error("Erro ao adicionar texto", err)
+      return
     }
-    setItems([...items, newItem])
-    setText('')
   }
 
   // Update
-  const updateItem = (id) => {
-    setItems(items.map((item) => {
-      if (item.id === id) {
-        return { ...item, text: editItemText }
+  const updateItem = async (id) => {
+    try {
+      const response = await fetch(`${BASE_URL}/items/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({text: editItemText})
+      })
+
+      if (response.ok) {
+        await fetchItems()
+        setEditItemId(null)
+        setEditItemText('')
+      } else {
+        console.error('Failed to update item', response.status)
       }
-      return item;
-    }))
-    setEditItemId(null);
-    setEditItemText('')
+    } catch (err) {
+      console.error('Error updating item', err)
+    }
   }
 
   // Delete
   const deleteItem = (id) => {
-    setItems(items.filter((item) => item.id !== id))
-  }
+		Alert.alert(
+            "Confirmar Exclusão",
+            "Você realmente quer apagar esse item?",
+            [
+                {
+                    text: "Cancelar",
+                    style: "cancel",
+                },
+                {
+                    text: "Sim, apagar",
+                    onPress: async () => {
+                        try {
+                            const response = await fetch(`${BASE_URL}/items/${id}`, {
+                                method: 'DELETE',
+                            });
+                            if (response.ok) {
+                                await fetchItems(); // Atualiza a lista de itens após excluir
+                            } else {
+                                console.error("Erro ao excluir item:", response.statusText);
+                            }
+                        } catch (error) {
+                            console.error("Erro ao excluir item:", error);
+                        }
+                    },
+                },
+            ],
+            { cancelable: true }
+        );
+	};
 
   // Read
   const renderItem = ({ item }) => {
@@ -117,18 +169,7 @@ export default function App() {
         keyExtractor={item => item.id}
         style={styles.list}
       />
-      <Text style={styles.title}>Hellow React Native App!</Text>
-      <Image
-        source={{ uri: 'https://picsum.photos/200' }}
-        style={{ width: 200, height: 200 }}
-      />
-      <StatusBar style="auto" />
-      <Text style={styles.title}>Valor do contador é {counter}</Text>
 
-      <View style={styles.buttonContainer}>
-        <Button title='Diminuir o contador' onPress={decrementCounter} color={'#8706d4'} />
-        <Button title='Aumentar o contador' onPress={incrementCounter} color={'#8706d4'} />
-      </View>
     </View>
   );
 }
