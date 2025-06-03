@@ -51,8 +51,20 @@
       "descricao": "Pipoca doce com toque de caramelo e pimenta, com glitter azul, servida direto das acrobacias do Stu!"
     },
     {
-      "text": "ABC",
-      "id": "fac2"
+      "text": "npx json-server -h http://10.81.205.26:3000 dados.json",
+      "id": "5fdc"
+    }
+  ],
+  "compras": [
+    {
+      "item": "Cenoura",
+      "quantidade": "1",
+      "id": "54f1"
+    },
+    {
+      "item": "Ovos",
+      "quantidade": "30",
+      "id": "5c2c"
     }
   ]
 }
