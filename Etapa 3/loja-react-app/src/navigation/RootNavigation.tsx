@@ -1,42 +1,25 @@
-import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { RootStackParamList, TabParamsList } from "./types";
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { ActivityIndicator, View } from 'react-native';
 
-import HomeScreen from "../screens/HomeScreen";
-import RegisterScreen from "../screens/RegisterScreen";
-import LoginScreen from "../screens/loginScreen";
-// import DetailsScreen from "../screens/DetailsScreen"
-// import SettingsScreen from "../screens/SettingsScreen"
-
-const AppStack = createNativeStackNavigator<RootStackParamList>();
-const Tab = createBottomTabNavigator<TabParamsList>();
-
-function TabNavigator() {
-    return (
-        <Tab.Navigator>
-            <Tab.Screen name="Home" component={HomeScreen} />
-            <Tab.Screen name="Settings" component={HomeScreen} />
-            <Tab.Screen name="Register" component={RegisterScreen} />
-        </Tab.Navigator>
-    )
-}
-
-function AppNavigator() {
-    return (
-        <AppStack.Navigator>
-            <AppStack.Screen name="Tabs" component={TabNavigator} options={{ headerShown: false }} />
-            <AppStack.Screen name="Details" component={HomeScreen} options={{ title: 'Detalhes' }} />
-            <AppStack.Screen name="Login" component={LoginScreen} options={{ title: 'Fazer login' }}/>
-        </AppStack.Navigator>
-    )
-}
+import AppNavigator from './AppNavigator';
+import AuthNavigator from './AuthNavigator';
+import { useAuth } from "../contexts/AuthContext"
 
 export default function RootNavigator() {
+    const {user, loading} = useAuth()
+
+    if (loading) {
+        return (
+            <View style={ {flex: 1, justifyContent: 'center', alignItems: 'center', gap: 10} }>
+                <ActivityIndicator size="large"/>
+            </View>
+        )
+    }
+
     return (
         <NavigationContainer>
-            <AppNavigator />
+            { user ? <AuthNavigator /> : <AppNavigator/>}
         </NavigationContainer>
-    )
+    );
 }

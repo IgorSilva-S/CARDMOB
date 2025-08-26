@@ -1,12 +1,14 @@
 import React from "react";
 import { View, Text, Button, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { useAuth } from "../contexts/AuthContext";
 import RegisterScreen from "./RegisterScreen";
 
 import { useTheme } from '../contexts/ThemeContext'
 
 function HomeScreen({ navigation }: any) {
     const { theme, toggleTheme } = useTheme();
+    const { login } = useAuth()
     return (
         <View style={[styles.container, {backgroundColor: theme.colors.background}]}>
             <Text style={{ color: theme.colors.text, marginBottom: theme.spacing(1) }}>
@@ -17,6 +19,7 @@ function HomeScreen({ navigation }: any) {
                 navigation.navigate('Details')
             }}/>
             <Button title="Fazer login" color={theme.colors.primary} onPress={() => navigation.navigate('Login')}/>
+            <Button title="Fake Login" onPress={ () => login('fake_token')}/>
         </View>
     );
 }

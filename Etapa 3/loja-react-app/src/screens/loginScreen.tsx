@@ -2,6 +2,8 @@ import React, { use, useState } from "react";
 import { View, StyleSheet, TextInput, Button, Text } from "react-native";
 
 import { useTheme } from '../contexts/ThemeContext'
+import { fakeLogin } from "../services/authService";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function LoginScreen({ navigation }: any) {
     const { theme, toggleTheme } = useTheme();
@@ -9,10 +11,12 @@ export default function LoginScreen({ navigation }: any) {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
+    const { login } = useAuth()
 
     const handleLogin = async () => {
         try {
-            console.log('OK')
+            const token = await fakeLogin(email, password);
+            login(token)
         } catch (err: any) {
             setError(err)
         }
@@ -63,5 +67,6 @@ const styles = StyleSheet.create({
         padding: 20,
         color: 'red',
         backgroundColor: '#fd080875',
+        borderRadius: 5
     }
 })
