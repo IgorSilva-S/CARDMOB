@@ -1,72 +1,69 @@
 import React, { use, useState } from "react";
-import { View, StyleSheet, TextInput, Button, Text } from "react-native";
+import { View, TextInput, Button, StyleSheet, Text, SafeAreaView} from "react-native";
 
-import { useTheme } from '../contexts/ThemeContext'
-import { fakeLogin } from "../services/authService";
+import { requestLogin } from "../services/authService";
 import { useAuth } from "../contexts/AuthContext";
 
 export default function LoginScreen({ navigation }: any) {
-    const { theme, toggleTheme } = useTheme();
-
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [error, setError] = useState('')
-    const { login } = useAuth()
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const { login } = useAuth();
 
     const handleLogin = async () => {
         try {
-            const token = await fakeLogin(email, password);
-            login(token)
+            // Lógica de login / conexão com backend.
+            const token = await requestLogin(email, password);
+            login(token);
+            console.log('Login ok');
         } catch (err: any) {
-            setError(err)
+            setError(err);
         }
     }
 
     return (
-        <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
-            <Text style={{ color: theme.colors.text }}>Email</Text>
-            <TextInput
-                style={[styles.input, { color: theme.colors.text }]}
+        <SafeAreaView style={styles.container}>
+        <View>
+            <Text>Email:</Text>
+            <TextInput 
+                style={styles.input}
                 value={email}
                 onChangeText={setEmail}
                 autoCapitalize="none"
             />
-            <Text style={{ color: theme.colors.text }}>Senha</Text>
-            <TextInput
-                style={[styles.input, { color: theme.colors.text }]}
+            <Text>Senha:</Text>
+            <TextInput 
+                style={styles.input}
                 value={password}
                 onChangeText={setPassword}
                 secureTextEntry
             />
+            { error ? 
+                <Text 
+                    style={{ color: 'red'}}
+                >
+                {error}
+                </Text> :
+                null
+            }
+            <Button title="Entrar" onPress={handleLogin} />
+            <Button title="Registrar" onPress={ () => navigation.navigate('Register') }/>
 
-            {error ? <Text style={styles.errTxt}>{error}</Text> : null}
-            <Button title="Entrar" onPress={handleLogin} color={theme.colors.primary}/>
-            <Button title="Registrar" onPress={() => navigation.navigate('Register')} color={theme.colors.primary}/>
         </View>
-    )
+        </SafeAreaView>
+    );
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: "center",
+        justifyContent: 'center',
         padding: 20,
-        gap: 10,
     },
-
     input: {
         borderWidth: 1,
-        borderBottomWidth: 3,
-        borderColor: '#8706d4',
-        padding: 5,
+        borderColor: '#ccc',
+        padding: 8,
         marginBottom: 12,
-        borderRadius: 4,
-    },
-
-    errTxt: {
-        padding: 20,
-        color: 'red',
-        backgroundColor: '#fd080875',
-        borderRadius: 5
     }
-})
+});
