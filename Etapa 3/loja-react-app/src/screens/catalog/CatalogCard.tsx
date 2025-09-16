@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     image: {
         width: '100%',
         height: 200,
-        borderRadius: 8,
+        borderRadius: 5,
         borderWidth: 1,
         borderColor: '#ddd'
     },

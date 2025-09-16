@@ -10,6 +10,7 @@ import RegisterScreen from '../screens/RegisterScreen';
 import LoginScreen from '../screens/LoginScreen';
 // importar depois que implementar: DetailsScreen, SettingsScreen
 import CatalogScreen from '../screens/catalog/CatalogScreen';
+import CartScreen from '../screens/cart/CartScreen';
 
 const AppStack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<TabParamsList>();
@@ -19,11 +20,17 @@ function TabNavigator() {
         <Tab.Navigator
             screenOptions={({ route, navigation }) => ({
                 tabBarIcon: ({ color, focused, size }) => {
-                    let iconName;
+                    let iconName: keyof typeof FontAwesome.glyphMap = 'question';;
                     if (route.name === 'Home') {
                         iconName = focused ? 'home' : 'home';
+                    } else if (route.name === 'Settings') {
+                        iconName = focused ? 'gears' : 'gears'
+                    } else if (route.name === 'Register') {
+                        iconName = focused ? 'user-plus' : 'user-plus'
                     } else if (route.name === 'Catalog') {
                         iconName = focused ? 'tags' : 'tags'
+                    } else if (route.name === 'Cart') {
+                        iconName = focused ? 'shopping-cart' : 'shopping-cart'
                     }
                     return <FontAwesome name={iconName} size={size} color={color} />
                 },
@@ -32,7 +39,9 @@ function TabNavigator() {
                 headerShown: true,
             })}
         >
-            <Tab.Screen name="Catalog" component={CatalogScreen} options={{title: 'Catálogo'}}/>
+
+            <Tab.Screen name="Catalog" component={CatalogScreen} options={{ title: 'Catálogo' }} />
+            <Tab.Screen name="Cart" component={CartScreen} options={{ title: 'Carrinho' }}/>
             <Tab.Screen name="Settings" component={HomeScreen} />
             <Tab.Screen name="Register" component={RegisterScreen} />
         </Tab.Navigator>
