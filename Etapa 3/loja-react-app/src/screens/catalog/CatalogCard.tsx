@@ -19,7 +19,7 @@ const CatalogCard = ({ product, onBuyPress }: any) => {
                         onPress={onBuyPress}
                     />
                 </View>
-            /</View>
+            </View>
         </View>
     )
 }
@@ -39,10 +39,32 @@ const styles = StyleSheet.create({
         shadowRadius: 3,
         elevation: 3,
     },
-    image: {},
-    details: {},
-    name: {},
-    description: {},
-    price: {},
-    buttonsContainer: {},
+    image: {
+        width: '100%',
+        height: 200,
+        borderRadius: 8,
+        borderWidth: 1,
+        borderColor: '#ddd'
+    },
+    details: {
+        paddingHorizontal: 10,
+    },
+    name: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginVertical: 15,
+    },
+    description: {
+        fontSize: 14,
+    },
+    price: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#28a745',
+        marginVertical: 10,
+    },
+    buttonsContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
 })
