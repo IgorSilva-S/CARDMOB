@@ -1,16 +1,14 @@
-import React, { useContext } from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
-import FontAwesome from '@expo/vector-icons/FontAwesome';
+import React from "react";
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+
+import { useShop } from "../../contexts/ShopContext";
 
 const CartItem = ({ item }: any) => {
+    // @todo implementar o context para persistir dados do carrinho.
+    const { addToCart } = useShop();
+
     const handleRemove = () => {
-        console.log('Exclusão de produto')
-    }
-    const handleAdd = () => {
-        console.log('Adição de produto')
-    }
-    const handleExclusion = () => {
-        console.log('Remoção total de produto')
+        console.log('exclui produto');
     }
 
     return (
@@ -20,22 +18,24 @@ const CartItem = ({ item }: any) => {
                 <Text style={styles.name}>{item.name}</Text>
                 <View style={styles.quantity}>
                     <Text style={styles.price}>R$ {(item.price * item.quantity).toFixed(2)}</Text>
-                    <TouchableOpacity onPress={() => handleRemove()} style={styles.fButton}>
-                        <Text style={styles.fbTxt}>-</Text>
+                    <TouchableOpacity onPress={() => addToCart(item)} style={styles.button}>
+                        <Text style={styles.buttonText}>-</Text>
                     </TouchableOpacity>
-                    <Text style={styles.qValue}>{item.quantity}</Text>
-                    <TouchableOpacity onPress={() => handleAdd()} style={styles.fButton}>
-                        <Text style={styles.fbTxt}>+</Text>
+                    <Text style={styles.quantityValue}>{item.quantity}</Text>
+
+                    <TouchableOpacity onPress={() => addToCart(item)} style={styles.button}>
+                        <Text style={styles.buttonText}>+</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => handleExclusion()} style={styles.fButton}>
-                        <FontAwesome name="trash-o" size={24} color="black" />
+
+                    <TouchableOpacity onPress={() => handleRemove()} style={styles.button}>
+                        <Text style={styles.buttonText}>Remover</Text>
                     </TouchableOpacity>
                 </View>
             </View>
         </View>
-    )
-}
+    );
 
+}
 export default CartItem;
 
 const styles = StyleSheet.create({
@@ -44,18 +44,19 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 10,
         borderBottomWidth: 1,
-        borderColor: '#ddd'
+        borderColor: '#ddd',
     },
     image: {
         width: '50%',
         height: 100,
         borderRadius: 8,
-        borderColor: '#ddd'
+        borderColor: '#ddd',
     },
     name: {},
     quantity: {},
     price: {},
-    fButton: {},
-    fbTxt: {},
-    qValue: {}
-})
+    button: {},
+    buttonText: {},
+    quantityValue: {},
+
+});
