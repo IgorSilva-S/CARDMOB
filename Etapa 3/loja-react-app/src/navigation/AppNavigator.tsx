@@ -11,6 +11,7 @@ import LoginScreen from '../screens/LoginScreen';
 // importar depois que implementar: DetailsScreen, SettingsScreen
 import CatalogScreen from '../screens/catalog/CatalogScreen';
 import CartScreen from '../screens/cart/CartScreen';
+import CheckoutScreen from '../screens/cart/CheckoutScreen';
 
 const AppStack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<TabParamsList>();
@@ -70,6 +71,11 @@ function StackNavigator() {
                 name="Login"
                 component={LoginScreen}
                 options={{ title: 'Acessar' }}
+            />
+            <AppStack.Screen
+                name="Checkout"
+                component={CheckoutScreen}
+                options={{ title: 'Concluir pedido'}}
             />
         </AppStack.Navigator>
     );
