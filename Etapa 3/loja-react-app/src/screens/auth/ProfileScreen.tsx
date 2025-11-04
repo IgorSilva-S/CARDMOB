@@ -4,7 +4,7 @@ import { View, Text, Button, StyleSheet, Image } from "react-native"; // modific
 import { useTheme } from '../../contexts/ThemeContext';
 import { useAuth } from '../../contexts/AuthContext';
 
-import { requestProfileById } from "../../services/profileService"; // novo 
+import { requestProfileById } from "../../services/profileServices"; // novo 
 
 function ProfileScreen({ navigation }: any) {
     const { theme, toggleTheme } = useTheme();

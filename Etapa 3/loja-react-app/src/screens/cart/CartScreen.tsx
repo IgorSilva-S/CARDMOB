@@ -1,60 +1,61 @@
 import React from 'react';
-import { View, Text, FlatList, Button, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, StyleSheet, Button, TouchableOpacity } from 'react-native';
 
 import CartItem from './CartItem';
 
 import { useShop } from '../../contexts/ShopContext';
 
 const CartScreen = ({ navigation }: any) => {
-    const { cartItems } = useShop();
+    const { cartItems, getTotalPrice, clearCart } = useShop();
 
-    const renderItem = ({ item }: any) => (
+    const renderItem = ({item} : any) => (
         <CartItem item={item} />
     );
 
     const handleCheckout = () => {
-        console.log('Concluindo a compra')
+        console.log('Concluindo a compra');
     }
 
     return (
         <View style={styles.container}>
             {cartItems.length === 0 ? (
-                <View>
-                    <Text style={styles.empty}>Seu Carrinho está vazio!</Text>
-                    <Button title='Voltar para o Menu' onPress={() => navigation.navigate('Catalog')} />
+                <View style={styles.container}>
+                    <Text style={styles.empty}>Seu carrinho está vazio.</Text>
+                    <Button 
+                        title='Ver produtos'
+                        onPress={ () => navigation.navigate('Catalog') }
+                    />
                 </View>
             ) : (
-                <>
-                    <View>
-                        <Text>Carrinho de compras</Text>
-                        <FlatList
-                            data={cartItems}
-                            renderItem={renderItem}
-                            keyExtractor={(item: any) => item.id.toString()}
-                        />
-                    </View>
+                <View style={styles.listContainer}>
+                    {/* <Text>Carrinho de compras</Text> */}
+                    <FlatList 
+                        data={cartItems}
+                        renderItem={renderItem}
+                        keyExtractor={(item: any) => item.id.toString()}
+                    />
                     <View style={styles.totalContainer}>
-                        <Text style={styles.totalText}>Total R$ {handleCheckout}</Text>
+                        <Text style={styles.totalText}>Total R$ {getTotalPrice().toString()}</Text>
                         <TouchableOpacity
-                            onPress={handleCheckout}
-                            style={styles.clearBtn}
+                            onPress={clearCart}
+                            style={styles.clearButton}
                         >
-                            <Text style={styles.clearBtnTxt}>Limpar Carrinho</Text>
+                            <Text style={styles.clearButtonText}>Limpar carrinho</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             onPress={() => navigation.navigate('Catalog')}
-                            style={styles.continueBtn}
+                            style={styles.continueButton}
                         >
-                            <Text style={styles.continueBtnTxt}>Continuar comprando</Text>
+                            <Text style={styles.continueButtonText}>Continuar comprando</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             onPress={() => navigation.navigate('Catalog')}
-                            style={styles.checkoutBtn}
+                            style={styles.checkoutButton}
                         >
-                            <Text style={styles.checkoutBtnTxt}>Concluir pedido</Text>
+                            <Text style={styles.checkoutButtonText}>Concluir Pedido</Text>
                         </TouchableOpacity>
                     </View>
-                </>
+                </View>
             )
             }
         </View>
@@ -67,7 +68,6 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        marginVertical: 150,
     },
     empty: {
         fontSize: 16,
@@ -87,36 +87,36 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
     },
-    clearBtn: {
+    clearButton: {
         marginTop: 10,
         backgroundColor: 'grey',
         padding: 10,
         borderRadius: 5,
     },
-    clearBtnTxt: {
+    clearButtonText: {
         color: '#FFF',
         textAlign: 'center',
     },
-    continueBtn: {
+    continueButton: {
         marginTop: 10,
         backgroundColor: '#007BFF',
         padding: 10,
         borderRadius: 5,
     },
-    continueBtnTxt: {
+    continueButtonText: {
         color: '#FFF',
         textAlign: 'center',
         fontSize: 16,
     },
-    checkoutBtn: {
+    checkoutButton: {
         marginTop: 10,
         backgroundColor: '#28A745',
         padding: 10,
         borderRadius: 5,
     },
-    checkoutBtnTxt: {
+    checkoutButtonText: {
         color: '#FFF',
         textAlign: 'center',
         fontSize: 16,
-    }
-})
+    },
+});
