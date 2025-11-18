@@ -1,27 +1,28 @@
-import { NavigatorScreenParams } from "@react-navigation/native";
+import { NavigatorScreenParams } from '@react-navigation/native';
 
-export type TabParamsList = {
-    Home: undefined,
-    Settings: undefined,
-    Register: undefined,
-    Catalog: undefined,
-    Cart: undefined,
-}
+export type TabParamList = {
+  Catalog: undefined,
+  Cart: undefined,
+  Settings: undefined,
+  Register: undefined,
+};
 
 export type RootStackParamList = {
-    Tabs: NavigatorScreenParams<TabParamsList>;
-    Details: { itemId: number },
-    Login: undefined,
-    Checkout: undefined
+  Tabs: NavigatorScreenParams<TabParamList>;
+  Details: { itemId: number };
+  Login: undefined;
+  Checkout: undefined;
+  OrderInfo: undefined;
 }
 
 export type AuthTabParamList = {
-    Home: undefined;
-    Settings: undefined;
+  Home: undefined;
+  Settings: undefined;
 }
 
 export type AuthStackParamList = {
-    Tabs: NavigatorScreenParams<AuthTabParamList>;
-    Details: { itemId: number },
-    Checkout: undefined
+  Tabs: NavigatorScreenParams<AuthTabParamList>;
+  Details: { itemId: number};
+  Checkout: undefined;
+  OrderInfo: undefined;
 }
