@@ -8,7 +8,7 @@ const CartItem = ({ item }: any) => {
     const { addToCart, removeFromCart } = useShop();
 
     const handleRemove = (item: any) => {
-        removeFromCart(item.id)
+        removeFromCart(item.id);
         console.log('exclui produto');
     }
 
@@ -24,12 +24,12 @@ const CartItem = ({ item }: any) => {
                     </TouchableOpacity>
                     <Text style={styles.quantityValue}>{item.quantity}</Text>
 
-                    <TouchableOpacity onPress={() => addToCart(item, 1)} style={styles.button}>
+                    <TouchableOpacity onPress={() => addToCart(item)} style={styles.button}>
                         <Text style={styles.buttonText}>+</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => handleRemove(item)} style={styles.removeButton}>
-                        <Text style={styles.buttonText}>Remover</Text>
+                        <Text style={styles.removeButtonText}>Remover</Text>
                     </TouchableOpacity>
                 </View>
             </View>

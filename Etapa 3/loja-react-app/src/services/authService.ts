@@ -70,3 +70,4 @@ export async function getTokenData(token: string | null): Promise<any[]> {
         return Promise.reject('Token inválido.');
     }
 }
+
